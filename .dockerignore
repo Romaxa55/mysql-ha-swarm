@@ -1,0 +1,4 @@
+*
+!mysql_cluster_manager/src/*.py
+!mysql_cluster_manager/src/mcm/*.py
+!mysql_cluster_manager/requirements.txt
