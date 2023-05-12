@@ -1,0 +1,79 @@
+version: "3.8"
+
+networks:
+  backend:
+
+volumes:
+  backup-volume:
+
+services:
+  consul:
+    image: consul:1.15.2
+    networks:
+       backend:
+          aliases:
+             - consul_cluster
+    environment:
+      - CONSUL_BIND_INTERFACE=eth0
+    command: agent -ui -data-dir /consul/data -server -client 0.0.0.0 -retry-join consul_cluster -bootstrap-expect=5 
+    deploy:
+      replicas: 5
+      endpoint_mode: dnsrr
+      placement:
+        max_replicas_per_node: 1
+      update_config:
+        parallelism: 1
+        delay: 60s
+      restart_policy:
+        condition: on-failure
+    ports:
+       - target: 8500
+         published: 8500
+         protocol: tcp
+         mode: host
+
+  mysql:
+    image: #todo
+    networks:
+       backend:
+    environment:
+      - CONSUL_BIND_INTERFACE=eth1
+      - CONSUL_BOOTSTRAP_SERVER=consul_cluster
+      - MINIO_ACCESS_KEY=minio
+      - MINIO_SECRET_KEY=minio123
+      - MINIO_URL=http://minio:9000
+      - MCM_BIND_INTERFACE=eth1
+      - MYSQL_ROOT_PASSWORD=verysecret123
+      - MYSQL_BACKUP_USER=backup_user
+      - MYSQL_BACKUP_PASSWORD=backup_secret
+      - MYSQL_REPLICATION_USER=replication_user
+      - MYSQL_REPLICATION_PASSWORD=replication_secret
+      - MYSQL_APPLICATION_USER=mysql_user
+      - MYSQL_APPLICATION_PASSWORD=mysql_secret
+    deploy:
+      replicas: 3
+      placement:
+        max_replicas_per_node: 1
+      update_config:
+        parallelism: 1
+        delay: 60s
+      restart_policy:
+        condition: on-failure
+    ports:
+      - 6032:6032
+      - 3306:6033
+
+  minio:
+    image: minio/minio:RELEASE.2020-10-18T21-54-12Z
+    networks:
+       backend:
+          aliases:
+             - minio_endpoint
+    volumes:
+       - backup-volume:/data
+    ports:
+       - 9000:9000
+    environment:
+       - MINIO_ACCESS_KEY=minio
+       - MINIO_SECRET_KEY=minio123
+    command: server /data
