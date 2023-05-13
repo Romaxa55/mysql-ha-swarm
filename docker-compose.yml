@@ -33,7 +33,7 @@ services:
          mode: host
 
   mysql:
-    image: #todo
+    image: ghcr.io/romaxa55/mysql-ha-swarm:latest
     networks:
        backend:
     environment:
