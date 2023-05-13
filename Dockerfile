@@ -10,14 +10,11 @@ WORKDIR /cluster
 
 COPY ./mysql_cluster_manager/ .
 
-RUN microdnf update
+RUN microdnf update #ToDO Проверка архитектуры и качаем консул и потом тож самое с proxysql
 
-#    && microdnf install git rpm-build unzip gnupg2 redhat-lsb-core procps \
+#    && microdnf install git make rpm-build unzip gnupg2 redhat-lsb-core procps \
         ##                            perl-DBD-MySQL libcurl openssl-devel rsync libev \
 #
-#    && wget https://downloads.percona.com/downloads/pmm2/2.37.0/source/redhat/pmm2-client-2.37.0-6.src.rpm -O ppm.rpm \
-#    && rpm -i /tmp/ppm.rpm \
-#    && rm /tmp/xtrabackup.rpm \
 #    && wget https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_amd64.zip -O /tmp/consul.zip \
 #    && unzip /tmp/consul.zip -d /usr/local/bin \
 #    && rm /tmp/consul.zip \
