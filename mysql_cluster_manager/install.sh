@@ -50,12 +50,12 @@ microdnf install cmake openssl-devel libaio libaio-devel automake autoconf \
 bison libtool ncurses-devel libgcrypt-devel libev-devel libcurl-devel zlib-devel \
 zstd vim-common
 # Compile percona backup mysql
-git clone https://github.com/percona/percona-xtrabackup.git
-cd percona-xtrabackup
-git checkout percona-xtrabackup-8.0.32-26
-mkdir build && cd build
-mkdir /boost
-cmake .. -DWITH_NUMA=1 -DDOWNLOAD_BOOST=1 -DWITH_BOOST=/boost -DWITH_NUMA=1 -DCMAKE_INSTALL_PREFIX=/compile_xtrabackup/percona-xtrabackup/build
-make -j $(nproc) && make install
+curl -LO https://github.com/percona/percona-xtrabackup/archive/refs/tags/percona-xtrabackup-8.0.32-26.tar.gz
+tar zxfv percona-xtrabackup-8.0.32-26.tar.gz && rm percona-xtrabackup-8.0.32-26.tar.gz
+#
+#mkdir build && cd build
+#mkdir /boost
+#cmake .. -DWITH_NUMA=1 -DDOWNLOAD_BOOST=1 -DWITH_BOOST=/boost -DWITH_NUMA=1 -DCMAKE_INSTALL_PREFIX=/compile_xtrabackup/percona-xtrabackup/build
+#make -j $(nproc) && make install
 # Clean all
 microdnf clean all
