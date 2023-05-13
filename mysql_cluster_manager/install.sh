@@ -49,20 +49,27 @@ proxysql --version
 BUILD_PACKAGES="cmake openssl-devel libaio libaio-devel automake autoconf \
 bison libtool ncurses-devel libgcrypt-devel libev-devel libcurl-devel zlib-devel \
 zstd vim-common gcc-toolset-11-gcc gcc-toolset-11-gcc-c++ gcc-toolset-11-binutils \
-numactl-devel libudev-devel cyrus-sasl-devel openldap-devel binutils lld"
+numactl-devel libudev-devel cyrus-sasl-devel openldap-devel binutils lld gcc-c++ ca-certificates"
 
 microdnf install $BUILD_PACKAGES
+
+# Install Boost # ToDo Не заубдь его удалить потом
+curl -LO https://webwerks.dl.sourceforge.net/project/boost/boost/1.73.0/boost_1_73_0.tar.gz
+mkdir /boost
+tar xvzf boost_1_73_0.tar.gz -C /boost
+
 
 # ToDo Нужно скомпилировать иначе бекапить на arm64 не сможем
 # Compile percona backup mysql
 curl -LO https://github.com/percona/percona-xtrabackup/archive/refs/tags/percona-xtrabackup-8.0.23-16.tar.gz
 tar zxfv percona-xtrabackup-8.0.23-16.tar.gz && rm percona-xtrabackup-8.0.23-16.tar.gz
 cd percona-xtrabackup-percona-xtrabackup-8.0.23-16
-#
-#mkdir build && cd build
-#mkdir /boost
-cmake .. -DDOWNLOAD_BOOST=1 -DWITH_BOOST=/boost -DWITH_NUMA=1 -DCMAKE_INSTALL_PREFIX=/cluster/percona-xtrabackup-percona-xtrabackup-8.0.32-26/build -DCMAKE_C_FLAGS="-pthread" -DCMAKE_CXX_FLAGS="-pthread"
-
-#make -j $(nproc) && make install
+mkdir build && cd build
+mkdir /percona
+cmake .. -DDOWNLOAD_BOOST=1 -DWITH_BOOST=/boost -DWITH_NUMA=1 -DCMAKE_INSTALL_PREFIX=/percona
+make -j $(nproc) && make install
 # Clean all
+xtrabackup -version
+
+
 microdnf clean all
