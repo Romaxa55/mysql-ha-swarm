@@ -12,11 +12,11 @@ ENV PROXYSQL_VERSION=${PROXYSQL_VERSION}
 WORKDIR /cluster
 COPY ./mysql_cluster_manager/ .
 
-RUN chmod +x ./install.sh
-#    ./install.sh &&  \
-#    rm install.sh
+RUN chmod +x ./install.sh && \
+    ./install.sh &&  \
+    rm install.sh
 
 #ENTRYPOINT ["bash", "-c", "set -e && ./mysql_cluster_manager.py join_or_bootstrap"]
 
-#EXPOSE 6032/tcp
+EXPOSE 6032/tcp
 CMD ["tail", "-f", "/dev/null"]
