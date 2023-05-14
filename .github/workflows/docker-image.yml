@@ -11,7 +11,7 @@ env:
 
 jobs:
   build:
-    runs-on: macos-latest
+    runs-on: ubuntu-latest
     permissions:
       contents: read
       packages: write
@@ -20,8 +20,6 @@ jobs:
       id-token: write
 
     steps:
-    - run: uname -a
-
     - name: Checkout repository
       uses: actions/checkout@v3
       with:
