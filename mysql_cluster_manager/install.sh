@@ -49,7 +49,7 @@ proxysql --version
 BUILD_PACKAGES="cmake openssl-devel libaio libaio-devel automake autoconf \
 bison libtool ncurses-devel libgcrypt-devel libev-devel libcurl-devel zlib-devel \
 zstd vim-common gcc-toolset-11-gcc gcc-toolset-11-gcc-c++ gcc-toolset-11-binutils \
-numactl-devel libudev-devel cyrus-sasl-devel openldap-devel binutils lld gcc-c++ ca-certificates"
+numactl-devel libudev-devel cyrus-sasl-devel openldap-devel binutils lld ksgcc-c++ ca-certificates"
 
 microdnf install $BUILD_PACKAGES
 

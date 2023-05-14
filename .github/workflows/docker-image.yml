@@ -11,7 +11,7 @@ env:
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: macos-latest
     permissions:
       contents: read
       packages: write
@@ -38,7 +38,7 @@ jobs:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1.2.0
       with:
-        platforms: amd64,arm64
+        platforms: arm64 #amd64,arm64
 
     # Login against a Docker registry except on PR
     # https://github.com/docker/login-action
@@ -71,7 +71,7 @@ jobs:
         labels: ${{ steps.meta.outputs.labels }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
-        platforms: amd64,arm64
+        platforms: arm64 #amd64,arm64
 
     - name: Sign the published Docker image
       if: ${{ github.event_name != 'pull_request' }}
