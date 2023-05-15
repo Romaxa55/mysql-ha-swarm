@@ -35,7 +35,7 @@ mc --version
 #Install mysql cluster manager
 python3 --version
 pip3 --version
-pip install --upgrade pip
+pip3 install --upgrade pip
 pip3 install -r requirements.txt
 
 # Install proxysql
