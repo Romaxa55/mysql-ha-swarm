@@ -49,12 +49,13 @@ proxysql --version
 PERCONA_URL="https://github.com/Romaxa55/percona-xtrabackup/releases/download/8.0.33/percona-xtrabackup-8.0.33-linux-${ARCH}.tar.gz"
 curl -LO ${PERCONA_URL}
 tar zxfv percona-xtrabackup*.tar.gz
+percona_path=percona-xtrabackup-8.0.33-linux-${ARCH}
 # Копирование бинарных файлов
-cp -r percona-xtrabackup-8.0.33-linux-aarch64/bin/* /usr/local/bin/
+cp -r ${percona_path}/bin/* /usr/local/bin/
 # Копирование библиотек
-cp -r percona-xtrabackup-8.0.33-linux-aarch64/lib/* /usr/local/lib/
+cp -r ${percona_path}/lib/* /usr/local/lib/
 # Копирование заголовочных файлов
-cp -r percona-xtrabackup-8.0.33-linux-aarch64/include/* /usr/local/include/
+cp -r ${percona_path}/include/* /usr/local/include/
 
 # Обновление кэша библиотек
 ldconfig
