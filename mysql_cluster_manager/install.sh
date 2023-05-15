@@ -48,6 +48,7 @@ proxysql --version
 # Install xtrabackup
 PERCONA_URL="https://github.com/Romaxa55/percona-xtrabackup/releases/download/8.0.33/percona-xtrabackup-8.0.33-linux-${ARCH}.tar.gz"
 curl -LO ${PERCONA_URL}
+tar zxfv percona-xtrabackup*.tar.gz
 # Копирование бинарных файлов
 cp -r percona-xtrabackup-8.0.33-linux-aarch64/bin/* /usr/local/bin/
 # Копирование библиотек
