@@ -17,7 +17,7 @@ function check_architecture {
 check_architecture
 
 microdnf update
-microdnf install git gcc cmake python39-devel unzip gnupg2 redhat-lsb-core procps perl-DBD-MySQL libcurl openssl-devel rsync libev
+microdnf install git gcc cmake numactl-libs python39-devel unzip gnupg2 redhat-lsb-core procps perl-DBD-MySQL libcurl openssl-devel rsync libev
 
 # Consul install
 CONSUL_DOWNLOAD_URL="https://releases.hashicorp.com/consul/${CONSUL_VERSION}/consul_${CONSUL_VERSION}_linux_${arch}.zip"
@@ -48,7 +48,16 @@ proxysql --version
 # Install xtrabackup
 PERCONA_URL="https://github.com/Romaxa55/percona-xtrabackup/releases/download/8.0.33/percona-xtrabackup-8.0.33-linux-${ARCH}.tar.gz"
 curl -LO ${PERCONA_URL}
-#xtrabackup -version
+# Копирование бинарных файлов
+cp -r percona-xtrabackup-8.0.33-linux-aarch64/bin/* /usr/local/bin/
+# Копирование библиотек
+cp -r percona-xtrabackup-8.0.33-linux-aarch64/lib/* /usr/local/lib/
+# Копирование заголовочных файлов
+cp -r percona-xtrabackup-8.0.33-linux-aarch64/include/* /usr/local/include/
 
+# Обновление кэша библиотек
+ldconfig
+#xtrabackup -version
+rm -rf percona*
 
 microdnf clean all

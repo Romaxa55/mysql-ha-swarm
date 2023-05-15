@@ -16,7 +16,6 @@ RUN chmod +x ./install.sh && \
     ./install.sh &&  \
     rm install.sh
 
-#ENTRYPOINT ["bash", "-c", "set -e && ./mysql_cluster_manager.py join_or_bootstrap"]
+ENTRYPOINT ["bash", "-c", "set -e && ./src/mysql_cluster_manager.py join_or_bootstrap"]
 
 EXPOSE 6032/tcp
-CMD ["tail", "-f", "/dev/null"]
