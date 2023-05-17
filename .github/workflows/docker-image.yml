@@ -38,7 +38,7 @@ jobs:
     - name: Set up QEMU
       uses: docker/setup-qemu-action@v1.2.0
       with:
-        platforms: amd64 #,arm64
+        platforms: amd64,arm64
 
     # Login against a Docker registry except on PR
     # https://github.com/docker/login-action
@@ -71,12 +71,5 @@ jobs:
         labels: ${{ steps.meta.outputs.labels }}
         cache-from: type=gha
         cache-to: type=gha,mode=max
-        platforms: amd64 #,arm64
+        platforms: amd64,arm64
 
-    - name: Sign the published Docker image
-      if: ${{ github.event_name != 'pull_request' }}
-      env:
-        COSIGN_EXPERIMENTAL: "true"
-      # This step uses the identity token to provision an ephemeral certificate
-      # against the sigstore community Fulcio instance.
-      run: echo "${{ steps.meta.outputs.tags }}" | xargs -I {} cosign sign {}@${{ steps.build-and-push.outputs.digest }}
