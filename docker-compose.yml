@@ -34,7 +34,7 @@ services:
          mode: host
 
   mysql:
-    image: ghcr.io/romaxa55/mysql-ha-swarm:latest
+    image: ghcr.io/romaxa55/mysql-ha-swarm:1.0.0
     networks:
        postgres-network:
     environment:
@@ -65,7 +65,7 @@ services:
       - 3306:6033
 
   minio:
-    image: minio/minio:RELEASE.2020-10-18T21-54-12Z
+    image: minio/minio:RELEASE.2023-05-04T21-44-30Z
     networks:
        postgres-network:
           aliases:
