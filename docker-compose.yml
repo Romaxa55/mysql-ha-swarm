@@ -1,7 +1,8 @@
 version: "3.8"
 
 networks:
-  backend:
+  postgres-network:
+    external: true
 
 volumes:
   backup-volume:
@@ -10,7 +11,7 @@ services:
   consul:
     image: consul:1.15.2
     networks:
-       backend:
+       postgres-network:
           aliases:
              - consul_cluster
     environment:
@@ -35,7 +36,7 @@ services:
   mysql:
     image: ghcr.io/romaxa55/mysql-ha-swarm:latest
     networks:
-       backend:
+       postgres-network:
     environment:
       - CONSUL_BIND_INTERFACE=eth1
       - CONSUL_BOOTSTRAP_SERVER=consul_cluster
@@ -66,13 +67,13 @@ services:
   minio:
     image: minio/minio:RELEASE.2020-10-18T21-54-12Z
     networks:
-       backend:
+       postgres-network:
           aliases:
              - minio_endpoint
     volumes:
        - backup-volume:/data
     ports:
-       - 9000:9000
+       - 9900:9000
     environment:
        - MINIO_ACCESS_KEY=minio
        - MINIO_SECRET_KEY=minio123
